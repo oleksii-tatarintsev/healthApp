@@ -8,11 +8,11 @@ class MCRouter {
       transitionDuration: Duration(microseconds: 300),
       reverseTransitionDuration: Duration(microseconds: 300),
       pageBuilder: (
-          _,
-          __,
-          ___,
-          ) =>
-      widget,
+        _,
+        __,
+        ___,
+      ) =>
+          widget,
       transitionsBuilder: (_, anim, __, child) {
         return FadeTransition(
           opacity: anim,
@@ -22,17 +22,20 @@ class MCRouter {
     );
   }
 
-  static PageRouteBuilder<void>splashBuilder(Widget widget, RouteSettings settings) {
+  static PageRouteBuilder<void> splashBuilder(
+    Widget widget,
+    RouteSettings settings,
+  ) {
     return PageRouteBuilder(
       settings: settings,
       transitionDuration: Duration(seconds: 1),
       reverseTransitionDuration: Duration(microseconds: 300),
       pageBuilder: (
-          _,
-          __,
-          ___,
-          ) =>
-      widget,
+        _,
+        __,
+        ___,
+      ) =>
+          widget,
       transitionsBuilder: (_, anim, __, child) {
         return FadeTransition(
           opacity: anim,

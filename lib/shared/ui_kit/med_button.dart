@@ -27,7 +27,6 @@ class _MCButtonState extends State<MCButton> {
   late final Color buttonColor;
   late final Color textColor;
 
-
   @override
   void initState() {
     switch (widget.buttonType) {

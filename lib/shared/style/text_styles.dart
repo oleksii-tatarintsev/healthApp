@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
-
 class MCTextStyles {
   static final black12Medium500 = GoogleFonts.montserrat(
     fontSize: 12,

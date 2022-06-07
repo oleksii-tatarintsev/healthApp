@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:healthapp/shared/style/export.dart';
 
-
 // TODO: Домашка
 /// Изучи каждый из этих параметров, что он делает.
 /// Поэкспериментируй, задавай какие-то значения, посмотри.
@@ -55,8 +54,7 @@ class MCTextField extends StatelessWidget {
       children: [
         Text(
           title ?? '',
-          style:
-              MCTextStyles.black12Medium500.copyWith(color: titleTextColor),
+          style: MCTextStyles.black12Medium500.copyWith(color: titleTextColor),
         ),
         TextFormField(
           inputFormatters: filterTextInput,

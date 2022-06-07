@@ -61,7 +61,6 @@ class _MCChoice extends State<MCChoice> {
   }
 
   Widget _optionButton(int index) {
-
     return ChoiceChip(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
