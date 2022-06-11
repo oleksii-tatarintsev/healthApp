@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/presentation/export.dart';
+
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  static const routeName = '/welcome';
-
-  const WelcomeScreen({Key? key}) : super(key: key);
+class TellAboutYourself extends StatelessWidget {
+  static const routeName = '/tell_about_yourself_screen';
+  const TellAboutYourself({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Center(
               child: Image.asset(
-                AppImages.welcomeImage,
+                AppImages.question0Image,
                 width: MediaQuery.of(context).size.shortestSide * 0.6,
               ),
             ),
@@ -29,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
               flex: 2,
             ),
             Text(
-              'Приветствуем!',
+              'Расскажите о себе!',
               style: MCTextStyles.black20SemiBold600,
             ),
             Spacer(
@@ -38,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(
               width: 240.0,
               child: Text(
-                'Сохраняйте все свои данные о здоровье в одном приложении',
+                'Чтобы настроить приложение под вас, нам необходимы данные о вашем здоровье. Заполните небольшую анкету.',
                 textAlign: TextAlign.center,
                 style: MCTextStyles.black14Medium500,
               ),
@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
               child: MCButton(
                 buttonText: 'Начать',
                 onTap: () {
-                  Navigator.pushNamed(context, TellAboutYourself.routeName);
+                  Navigator.pushNamed(context, QuestionScreen.routeName);
                 },
                 buttonType: ButtonType.blue,
               ),
