@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:healthapp/presentation/export.dart';
 
-
 class MCRouter {
   static PageRouteBuilder<void> builder(Widget widget, RouteSettings settings) {
     return PageRouteBuilder(
@@ -57,14 +56,6 @@ class MCRouter {
       case WelcomeScreen.routeName:
         {
           return splashBuilder(WelcomeScreen(), settings);
-        }
-      case TellAboutYourself.routeName:
-        {
-          return splashBuilder(TellAboutYourself(), settings);
-        }
-      case QuestionScreen.routeName:
-        {
-          return splashBuilder(QuestionScreen(), settings);
         }
       default:
         return builder(Container(), settings);
