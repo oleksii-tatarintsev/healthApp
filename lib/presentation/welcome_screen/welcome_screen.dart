@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/presentation/export.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
@@ -50,9 +49,7 @@ class WelcomeScreen extends StatelessWidget {
               constraints: BoxConstraints(maxWidth: 400),
               child: MCButton(
                 buttonText: 'Начать',
-                onTap: () {
-                  Navigator.pushNamed(context, TellAboutYourself.routeName);
-                },
+                onTap: () {},
                 buttonType: ButtonType.blue,
               ),
             ),
