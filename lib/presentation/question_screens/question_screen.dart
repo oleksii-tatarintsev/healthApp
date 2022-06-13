@@ -12,49 +12,55 @@ class QuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 55,
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: IconButton(
-              icon: SvgPicture.asset(AppIcons.backIcon),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 55,
             ),
-          ),
-          SizedBox(height: 50),
-          Text(
-            '1/7',
-            style: MCTextStyles.grey12Medium500,
-          ),
-          Container(
-            height: 4,
-            width: 255,
-            decoration: BoxDecoration(
-              color: MCColors.lightGrey,
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: SvgPicture.asset(AppIcons.backIcon),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
-          ),
-          SizedBox(height: 60),
-          /* if(){
-          PersonDataSection()
-          }else if(){
-          AddPhotoSection()
-          } else if(){
-
-          }*/
-          ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 400),
-            child: MCButton(
-              buttonText: 'Далее',
-              onTap: () {},
-              buttonType: ButtonType.blue,
+            SizedBox(height: 50),
+            Text(
+              '1/7',
+              style: MCTextStyles.grey12Medium500,
             ),
-          ),
-        ],
+            Container(
+              height: 4,
+              width: 255,
+              decoration: BoxDecoration(
+                color: MCColors.lightGrey,
+              ),
+            ),
+            SizedBox(height: 60),
+            ///quiz section
+            /* if(){
+            PersonDataSection()
+            }else if(){
+            AddPhotoSection()
+            } else if(){
+            SelectHeightSection(),
+            }else if(){
+            SelectWeightSection(),
+            }*/
+            SelectWeightSection(),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 400),
+              child: MCButton(
+                buttonText: 'Далее',
+                onTap: () {},
+                buttonType: ButtonType.blue,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

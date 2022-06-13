@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/shared/style/export.dart';
 
 class CustomRadioDemo extends StatefulWidget {
-  const CustomRadioDemo({Key? key}) : super(key: key);
+  final String title1;
+  final String title2;
+  const CustomRadioDemo({
+    required this.title1,
+    required this.title2,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State createState() => _CustomRadioDemoState();
@@ -26,13 +32,13 @@ class _CustomRadioDemoState extends State<CustomRadioDemo> {
           value: '1',
           groupValue: _groupValue,
           onChanged: _valueChangedHandler(),
-          text: 'Мужской',
+          text: widget.title1,
         ),
         MyRadioOption<String>(
           value: '2',
           groupValue: _groupValue,
           onChanged: _valueChangedHandler(),
-          text: 'Женский',
+          text: widget.title2,
         ),
       ],
     );

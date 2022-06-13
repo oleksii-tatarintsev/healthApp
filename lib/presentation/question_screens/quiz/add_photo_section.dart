@@ -25,7 +25,7 @@ class _AddPhotoSectionState extends State<AddPhotoSection> {
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
     } on PlatformException catch (e) {
-      print(e);
+      Text(e.toString());
     }
   }
 

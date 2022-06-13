@@ -52,7 +52,10 @@ class PersonDataSection extends StatelessWidget {
                 style: MCTextStyles.black14Medium500,
               ),
               Spacer(),
-              CustomRadioDemo(),
+              CustomRadioDemo(
+                title1: 'Мужской',
+                title2: 'Женский',
+              ),
             ],
           ),
           SizedBox(height: 50),
@@ -61,6 +64,3 @@ class PersonDataSection extends StatelessWidget {
     );
   }
 }
-
-
-
