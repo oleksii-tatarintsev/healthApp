@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:healthapp/shared/style/export.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class CustomDatePicker extends StatefulWidget {
   const CustomDatePicker({Key? key}) : super(key: key);
@@ -9,7 +11,16 @@ class CustomDatePicker extends StatefulWidget {
 }
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
-  DateTime date = DateTime(2016, 10, 26);
+  late DateFormat date;
+  late DateTime dateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting();
+    date = DateFormat.yMMMd('ru');
+    dateTime = DateTime.now();
+  }
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -31,22 +42,23 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
+
+    //final time = DateFormat('d MMM yyy').format(date);
+
     return CupertinoButton(
-      // Display a CupertinoDatePicker in date picker mode.
       onPressed: () => _showDialog(
         CupertinoDatePicker(
-          initialDateTime: date,
+          initialDateTime: dateTime,
           mode: CupertinoDatePickerMode.date,
           use24hFormat: true,
-          // This is called when the user changes the date.
           onDateTimeChanged: (DateTime newDate) {
-            setState(() => date = newDate);
+            setState(() => dateTime = newDate);
           },
         ),
       ),
 
       child: Text(
-        '${date.day} ${date.month} ${date.year}',
+        date.format(dateTime),
         style: MCTextStyles.blue14Bold700,
       ),
     );

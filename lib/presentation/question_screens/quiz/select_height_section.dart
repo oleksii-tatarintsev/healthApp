@@ -16,7 +16,10 @@ class SelectHeightSection extends StatelessWidget {
             style: MCTextStyles.black20SemiBold600,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 10,
+            ),
             child: Text(
               'Эти данные вы можете изменить в любой момент',
               style: MCTextStyles.black14Medium500,
@@ -48,7 +51,6 @@ class SelectHeightSection extends StatelessWidget {
                     text: 'см',
                     isVertical: true,
                   ),
-
                 ],
               ),
             ),
@@ -61,6 +63,7 @@ class SelectHeightSection extends StatelessWidget {
     );
   }
 }
+
 class HeightPicker extends StatefulWidget {
   late double quantity;
   final String text;
@@ -83,8 +86,11 @@ class _HeightPickerState extends State<HeightPicker> {
   @override
   void initState() {
     super.initState();
-    _controller =
-        SliderController(initialMark: widget.quantity, minMark: 0, interval: 1);
+    _controller = SliderController(
+      initialMark: widget.quantity,
+      minMark: 0,
+      interval: 1,
+    );
   }
 
   @override
@@ -114,13 +120,20 @@ class _HeightPickerState extends State<HeightPicker> {
               color: MCColors.blue,
             ),
           ),
-          SizedBox(width: 10,),
+          SizedBox(
+            width: 10,
+          ),
           Text(
             '${widget.quantity.toInt()}',
             style: MCTextStyles.blue20SemiBold600,
           ),
-          SizedBox(width: 10,),
-          Text(widget.text, style: MCTextStyles.blue12SemiBold600,),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            widget.text,
+            style: MCTextStyles.blue12SemiBold600,
+          ),
         ],
       ),
     );

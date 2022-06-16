@@ -16,7 +16,10 @@ class SelectWeightSection extends StatelessWidget {
             style: MCTextStyles.black20SemiBold600,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 10,
+            ),
             child: Text(
               'Эти данные вы можете изменить в любой момент',
               style: MCTextStyles.black14Medium500,
@@ -81,8 +84,11 @@ class _WeightPickerState extends State<WeightPicker> {
   @override
   void initState() {
     super.initState();
-    _controller =
-        SliderController(initialMark: widget.quantity, minMark: 0, interval: 1);
+    _controller = SliderController(
+      initialMark: widget.quantity,
+      minMark: 0,
+      interval: 1,
+    );
   }
 
   @override

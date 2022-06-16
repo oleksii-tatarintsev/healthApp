@@ -1,5 +1,8 @@
+export 'question_screens/final_question_screen.dart';
 export 'question_screens/question_screen.dart';
+export 'question_screens/quiz/add_blood_type_section.dart';
 export 'question_screens/quiz/add_photo_section.dart';
+export 'question_screens/quiz/arterial_pressure_section.dart';
 export 'question_screens/quiz/person_data_section.dart';
 export 'question_screens/quiz/select_height_section.dart';
 export 'question_screens/quiz/select_weight_section.dart';

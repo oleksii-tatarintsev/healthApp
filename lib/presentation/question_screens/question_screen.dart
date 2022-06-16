@@ -4,7 +4,6 @@ import 'package:healthapp/presentation/export.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
-
 class QuestionScreen extends StatelessWidget {
   static const routeName = '/question_screen';
   const QuestionScreen({Key? key}) : super(key: key);
@@ -18,14 +17,25 @@ class QuestionScreen extends StatelessWidget {
             SizedBox(
               height: 55,
             ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: SvgPicture.asset(AppIcons.backIcon),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: SvgPicture.asset(AppIcons.backIcon),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                TextButton(
+                  onPressed: () {
+
+                  },
+                  child: Text(
+                    'Пропустить шаг',
+                    style: MCTextStyles.blue14Bold700,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 50),
             Text(
@@ -41,21 +51,25 @@ class QuestionScreen extends StatelessWidget {
             ),
             SizedBox(height: 60),
             ///quiz section
-            /* if(){
-            PersonDataSection()
-            }else if(){
-            AddPhotoSection()
-            } else if(){
-            SelectHeightSection(),
-            }else if(){
-            SelectWeightSection(),
-            }*/
-            SelectWeightSection(),
+            ///1
+            PersonDataSection(),
+            ///2
+            //AddPhotoSection(),
+            ///3
+            //SelectHeightSection(),
+            ///4
+            //SelectWeightSection(),
+            ///5
+            //SelectBloodTypeSection(),
+            ///6
+            //ArterialPressureSection(),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 400),
               child: MCButton(
                 buttonText: 'Далее',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, FinalQuestionScreen.routeName);
+                },
                 buttonType: ButtonType.blue,
               ),
             ),
@@ -65,5 +79,3 @@ class QuestionScreen extends StatelessWidget {
     );
   }
 }
-
-

@@ -24,10 +24,8 @@ class _CustomRadioDemoState extends State<CustomRadioDemo> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 10,
-        ),
         MyRadioOption<String>(
           value: '1',
           groupValue: _groupValue,
