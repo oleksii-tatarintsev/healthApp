@@ -47,9 +47,9 @@ class SelectHeightSection extends StatelessWidget {
                     height: 200,
                   ),
                   HeightPicker(
-                    quantity: 170,
                     text: 'см',
                     isVertical: true,
+                    onChanged: (_){},
                   ),
                 ],
               ),
@@ -57,82 +57,6 @@ class SelectHeightSection extends StatelessWidget {
           ),
           SizedBox(
             height: 50,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HeightPicker extends StatefulWidget {
-  late double quantity;
-  final String text;
-  final bool isVertical;
-
-  HeightPicker({
-    required this.quantity,
-    required this.text,
-    required this.isVertical,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<HeightPicker> createState() => _HeightPickerState();
-}
-
-class _HeightPickerState extends State<HeightPicker> {
-  late SliderController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = SliderController(
-      initialMark: widget.quantity,
-      minMark: 0,
-      interval: 1,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: [
-          CustomSlider(
-            isVertical: widget.isVertical,
-            controller: _controller,
-            decoration: PointerDecoration(),
-            onChanged: (double value) {
-              setState(() {
-                widget.quantity = value;
-              });
-            },
-            indicator: Container(
-              alignment: Alignment.centerLeft,
-              height: 1,
-              width: 70,
-              color: MCColors.blue,
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            '${widget.quantity.toInt()}',
-            style: MCTextStyles.blue20SemiBold600,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            widget.text,
-            style: MCTextStyles.blue12SemiBold600,
           ),
         ],
       ),

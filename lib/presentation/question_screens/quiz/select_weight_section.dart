@@ -38,9 +38,10 @@ class SelectWeightSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   WeightPicker(
-                    quantity: 60,
                     text: 'кг',
                     isVertical: false,
+                    onChanged: (int value){
+                    },
                   ),
                   RotatedBox(
                     quarterTurns: 3,
@@ -62,91 +63,3 @@ class SelectWeightSection extends StatelessWidget {
   }
 }
 
-class WeightPicker extends StatefulWidget {
-  late double quantity;
-  final String text;
-  final bool isVertical;
-
-  WeightPicker({
-    required this.quantity,
-    required this.text,
-    required this.isVertical,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<WeightPicker> createState() => _WeightPickerState();
-}
-
-class _WeightPickerState extends State<WeightPicker> {
-  late SliderController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = SliderController(
-      initialMark: widget.quantity,
-      minMark: 0,
-      interval: 1,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '${widget.quantity.toInt()}',
-                style: MCTextStyles.blue20SemiBold600,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                widget.text,
-                style: MCTextStyles.blue12SemiBold600,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: 200,
-            height: 70,
-            child: CustomSlider(
-              isVertical: widget.isVertical,
-              controller: _controller,
-              decoration: PointerDecoration(),
-              onChanged: (double value) {
-                setState(() {
-                  widget.quantity = value;
-                });
-              },
-              indicator: Container(
-                alignment: Alignment.centerLeft,
-                height: 1,
-                width: 70,
-                color: MCColors.blue,
-              ),
-            ),
-          ),
-          // SizedBox(
-          //   width: 10,
-          // ),
-        ],
-      ),
-    );
-  }
-}

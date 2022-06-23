@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:healthapp/presentation/export.dart';
-import 'package:healthapp/presentation/question_screens/final_question_screen.dart';
 
 class MCRouter {
   static PageRouteBuilder<void> builder(Widget widget, RouteSettings settings) {

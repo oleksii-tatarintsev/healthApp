@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:healthapp/shared/style/export.dart';
 
-//TODO: Домашка
-/// Как ты видишь тут есть энам для того чтоб разные цвета кнопки далеть и
-/// разные разный цвет текста. Твоя задача, сделать екстеншин и переделать
-/// этот виджет из StatefulWidget в StatelessWidget
 class MCButton extends StatelessWidget {
   final ButtonType buttonType;
   final String buttonText;

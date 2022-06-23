@@ -21,6 +21,7 @@ class PersonDataSection extends StatelessWidget {
           MCTextField(
             title: 'Имя',
             onChanged: (value) {},
+
           ),
           SizedBox(
             height: 38,
@@ -55,6 +56,8 @@ class PersonDataSection extends StatelessWidget {
               CustomRadioDemo(
                 title1: 'Мужской',
                 title2: 'Женский',
+                onChanged: (String value){
+                },
               ),
             ],
           ),

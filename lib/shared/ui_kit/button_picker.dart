@@ -4,9 +4,11 @@ import 'package:healthapp/shared/style/export.dart';
 class CustomRadioDemo extends StatefulWidget {
   final String title1;
   final String title2;
+  final ValueChanged<String>? onChanged;
   const CustomRadioDemo({
     required this.title1,
     required this.title2,
+     this.onChanged,
     Key? key,
   }) : super(key: key);
 
@@ -17,9 +19,6 @@ class CustomRadioDemo extends StatefulWidget {
 class _CustomRadioDemoState extends State<CustomRadioDemo> {
   String? _groupValue;
 
-  ValueChanged<String?> _valueChangedHandler() {
-    return (value) => setState(() => _groupValue = value!);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +28,23 @@ class _CustomRadioDemoState extends State<CustomRadioDemo> {
         MyRadioOption<String>(
           value: '1',
           groupValue: _groupValue,
-          onChanged: _valueChangedHandler(),
+          onChanged: (String? value){
+            if(value != null){
+              setState(() => _groupValue = value);
+              widget.onChanged?.call(_groupValue!);
+            }
+          },
           text: widget.title1,
         ),
         MyRadioOption<String>(
           value: '2',
           groupValue: _groupValue,
-          onChanged: _valueChangedHandler(),
+          onChanged: (String? value){
+            if(value != null){
+              setState(() => _groupValue = value);
+              widget.onChanged?.call(_groupValue!);
+            }
+          },
           text: widget.title2,
         ),
       ],

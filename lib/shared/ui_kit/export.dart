@@ -1,6 +1,8 @@
 export 'bmi_widget.dart';
 export 'button_picker.dart';
+export 'custom_height_picker.dart';
 export 'custom_slider.dart';
+export 'custom_weight_picker.dart';
 export 'date_picker.dart';
 export 'med_button.dart';
 export 'med_choice.dart';
