@@ -69,22 +69,26 @@ class QuestionScreen extends StatelessWidget {
                     '${(state.index + 1).toString()}/6',
                     style: MCTextStyles.grey12Medium500,
                   ),
-                  Stack(
-                    children: [
-                      Container(
-                        height: 4,
-                        width: 255,
-                        decoration: BoxDecoration(
-                          color: MCColors.lightGrey,
+                  SizedBox(
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 4,
+                          width: 255,
+                          decoration: BoxDecoration(
+                            color: MCColors.lightGrey,
+                          ),
                         ),
-                      ),
-                      AnimatedContainer(
-                        duration: Duration(milliseconds: 500),
-                        height: 4,
-                        width: width,
-                        color: MCColors.blue,
-                      ),
-                    ],
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 500),
+                          height: 4,
+                          width:
+                              ((MediaQuery.of(context).size.width - 120) / 6) *
+                                  state.index,
+                          color: MCColors.blue,
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 60),
                   state.when(
@@ -102,17 +106,17 @@ class QuestionScreen extends StatelessWidget {
               child: MCButton(
                 buttonText: 'Далее',
                 onTap: () {
-                  context
-                      .read<QuizBloc>()
-                      .add(QuizEvent.move(index: state.index + 1));
                   if (state.index >= 5) {
                     Navigator.pushNamed(
                       context,
                       FinalQuestionScreen.routeName,
                     );
+                  } else {
+                    context
+                        .read<QuizBloc>()
+                        .add(QuizEvent.move(index: state.index + 1));
                   }
                   select = !select;
-                  width = width + 36;
                 },
                 buttonType: ButtonType.blue,
               ),
@@ -124,6 +128,7 @@ class QuestionScreen extends StatelessWidget {
   }
 
   Widget _selectQuiz(int index) {
+    print(index);
     switch (index) {
       case 0:
         return PersonDataSection();
