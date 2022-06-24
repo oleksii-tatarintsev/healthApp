@@ -8,13 +8,11 @@ import 'package:healthapp/shared/ui_kit/export.dart';
 
 class QuestionScreen extends StatelessWidget {
   static const routeName = '/question_screen';
-  const QuestionScreen({Key? key}) : super(key: key);
+  QuestionScreen({Key? key}) : super(key: key);
+  final GlobalKey<PersonDataSectionState> personDataSectionKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    bool select = false;
-    double width = 36;
-
     return BlocProvider<QuizBloc>(
       create: (BuildContext context) => QuizBloc(),
       child: Scaffold(
@@ -32,13 +30,14 @@ class QuestionScreen extends StatelessWidget {
                       IconButton(
                         icon: SvgPicture.asset(AppIcons.backIcon),
                         onPressed: () {
-                          context
-                              .read<QuizBloc>()
-                              .add(QuizEvent.move(index: state.index - 1));
                           if (state.index == 0) {
                             Navigator.pop(
                               context,
                             );
+                          } else {
+                            context
+                                .read<QuizBloc>()
+                                .add(QuizEvent.move(index: state.index - 1));
                           }
                         },
                       ),
@@ -47,14 +46,15 @@ class QuestionScreen extends StatelessWidget {
                       else
                         TextButton(
                           onPressed: () {
-                            context.read<QuizBloc>().add(
-                                  QuizEvent.move(index: state.index + 1),
-                                );
                             if (state.index >= 5) {
                               Navigator.pushNamed(
                                 context,
                                 FinalQuestionScreen.routeName,
                               );
+                            } else {
+                              context.read<QuizBloc>().add(
+                                    QuizEvent.move(index: state.index + 1),
+                                  );
                             }
                           },
                           child: Text(
@@ -83,7 +83,7 @@ class QuestionScreen extends StatelessWidget {
                           duration: Duration(milliseconds: 500),
                           height: 4,
                           width:
-                              ((MediaQuery.of(context).size.width - 120) / 6) *
+                              ((MediaQuery.of(context).size.width - 105) / 6) *
                                   state.index,
                           color: MCColors.blue,
                         ),
@@ -102,22 +102,10 @@ class QuestionScreen extends StatelessWidget {
         bottomNavigationBar: BlocBuilder<QuizBloc, QuizState>(
           builder: (BuildContext context, state) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 30),
               child: MCButton(
                 buttonText: 'Далее',
-                onTap: () {
-                  if (state.index >= 5) {
-                    Navigator.pushNamed(
-                      context,
-                      FinalQuestionScreen.routeName,
-                    );
-                  } else {
-                    context
-                        .read<QuizBloc>()
-                        .add(QuizEvent.move(index: state.index + 1));
-                  }
-                  select = !select;
-                },
+                onTap: () => _submitQuiz(context: context, state: state),
                 buttonType: ButtonType.blue,
               ),
             );
@@ -127,11 +115,36 @@ class QuestionScreen extends StatelessWidget {
     );
   }
 
+  void _submitQuiz({required BuildContext context, required QuizState state}) {
+    switch (state.index) {
+      case 0:
+        {
+          if (personDataSectionKey.currentState!.submitForm()) {
+            context
+                .read<QuizBloc>()
+                .add(QuizEvent.move(index: state.index + 1));
+          }
+        }
+        break;
+      case 5:
+        {
+          Navigator.pushNamed(
+            context,
+            FinalQuestionScreen.routeName,
+          );
+          break;
+        }
+      default:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index + 1));
+        }
+    }
+  }
+
   Widget _selectQuiz(int index) {
-    print(index);
     switch (index) {
       case 0:
-        return PersonDataSection();
+        return PersonDataSection(key: personDataSectionKey);
       case 1:
         return AddPhotoSection();
       case 2:

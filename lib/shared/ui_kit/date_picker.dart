@@ -4,7 +4,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  const CustomDatePicker({Key? key}) : super(key: key);
+  final ValueChanged<DateTime>? onChanged;
+  const CustomDatePicker({
+    this.onChanged,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -42,7 +46,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-
     //final time = DateFormat('d MMM yyy').format(date);
 
     return CupertinoButton(
@@ -53,10 +56,10 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           use24hFormat: true,
           onDateTimeChanged: (DateTime newDate) {
             setState(() => dateTime = newDate);
+            widget.onChanged?.call(dateTime);
           },
         ),
       ),
-
       child: Text(
         date.format(dateTime),
         style: MCTextStyles.blue14Bold700,
