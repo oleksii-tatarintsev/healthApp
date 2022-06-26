@@ -25,7 +25,7 @@ class PersonDataSectionState extends State<PersonDataSection> {
   }
 
   void _showToast() {
-    Widget toast = Container(
+    final Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
@@ -38,7 +38,7 @@ class PersonDataSectionState extends State<PersonDataSection> {
           SizedBox(
             width: 12.0,
           ),
-          Text("This is a Custom Toast"),
+          Text('This is a Custom Toast'),
         ],
       ),
     );
@@ -48,7 +48,7 @@ class PersonDataSectionState extends State<PersonDataSection> {
   Widget build(BuildContext context) {
     return BlocProvider<PersonDataBloc>(
       create: (BuildContext context) => PersonDataBloc(),
-      child: BlocBuilder<PersonDataBloc, PersonDataState>(
+      child: BlocConsumer<PersonDataBloc, PersonDataState>(
         builder: (BuildContext context, state) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 30),
@@ -105,7 +105,9 @@ class PersonDataSectionState extends State<PersonDataSection> {
                       CustomRadioDemo(
                         title1: 'Мужской',
                         title2: 'Женский',
-                        onChanged: (String value) {},
+                        onChanged: (String value) {
+
+                        },
                       ),
                     ],
                   ),
@@ -127,7 +129,12 @@ class PersonDataSectionState extends State<PersonDataSection> {
             ),
           );
         },
-      ),
+        listener: (BuildContext context, PersonDataState state) {
+          state.map(error: (PersonDataStateError value) {},
+            initial: (PersonDataStateInitial value) {},
+            loading: (PersonDataStateLoading value) {},
+            valid: (PersonDataStateValid value) {},);
+        },),
     );
   }
 
