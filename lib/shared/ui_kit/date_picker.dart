@@ -16,14 +16,13 @@ class CustomDatePicker extends StatefulWidget {
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
   late DateFormat date;
-  late DateTime dateTime;
+  DateTime? dateTime;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
     date = DateFormat.yMMMd('ru');
-    dateTime = DateTime.now();
   }
 
   void _showDialog(Widget child) {
@@ -46,22 +45,22 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    //final time = DateFormat('d MMM yyy').format(date);
 
     return CupertinoButton(
       onPressed: () => _showDialog(
         CupertinoDatePicker(
-          initialDateTime: dateTime,
+          initialDateTime: DateTime.now(),
           mode: CupertinoDatePickerMode.date,
           use24hFormat: true,
           onDateTimeChanged: (DateTime newDate) {
             setState(() => dateTime = newDate);
-            widget.onChanged?.call(dateTime);
+            widget.onChanged?.call(dateTime!);
           },
         ),
       ),
       child: Text(
-        date.format(dateTime),
+        dateTime == null ? '___' :
+        date.format(dateTime!),
         style: MCTextStyles.blue14Bold700,
       ),
     );

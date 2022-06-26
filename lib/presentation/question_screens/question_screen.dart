@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:healthapp/domain/bloc/person_data_bloc/person_data_bloc.dart';
 import 'package:healthapp/domain/bloc/quiz_bloc/quiz_bloc.dart';
 import 'package:healthapp/presentation/export.dart';
 import 'package:healthapp/shared/style/export.dart';
@@ -102,7 +103,12 @@ class QuestionScreen extends StatelessWidget {
         bottomNavigationBar: BlocBuilder<QuizBloc, QuizState>(
           builder: (BuildContext context, state) {
             return Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 30),
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 10,
+                bottom: 30,
+              ),
               child: MCButton(
                 buttonText: 'Далее',
                 onTap: () => _submitQuiz(context: context, state: state),
@@ -120,9 +126,16 @@ class QuestionScreen extends StatelessWidget {
       case 0:
         {
           if (personDataSectionKey.currentState!.submitForm()) {
-            context
-                .read<QuizBloc>()
-                .add(QuizEvent.move(index: state.index + 1));
+            personDataSectionKey.currentContext!
+                .read<PersonDataBloc>()
+                .add(PersonDataEvent.changed());
+            if (personDataSectionKey.currentContext!
+                .read<PersonDataBloc>()
+                .state is PersonDataStateValid) {
+              context
+                  .read<QuizBloc>()
+                  .add(QuizEvent.move(index: state.index + 1));
+            }
           }
         }
         break;
@@ -144,7 +157,10 @@ class QuestionScreen extends StatelessWidget {
   Widget _selectQuiz(int index) {
     switch (index) {
       case 0:
-        return PersonDataSection(key: personDataSectionKey);
+        return BlocProvider<PersonDataBloc>(
+          create: (BuildContext context) => PersonDataBloc(),
+          child: PersonDataSection(key: personDataSectionKey),
+        );
       case 1:
         return AddPhotoSection();
       case 2:

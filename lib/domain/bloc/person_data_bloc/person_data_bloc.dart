@@ -7,20 +7,33 @@ part 'person_data_state.dart';
 
 class PersonDataBloc extends Bloc<PersonDataEvent, PersonDataState> {
   String gender = '';
-  DateTime birthDate = DateTime.now();
+  DateTime? birthDate;
 
   PersonDataBloc() : super(PersonDataState.initial()) {
     on<PersonDataEvent>(
       (event, emit) {
         event.map(
-          changed: (state) {
-
+          changed: (_) {
+            if(gender == ''){
+              emit(PersonDataState.error(errorMessage: 'Выберете пол'));
+            } else if(birthDate == null){
+              emit(PersonDataState.error(errorMessage: 'Выберете дату рождения'));
+            } else{
+              emit(PersonDataState.valid());
+            }
           },
-          further: (state) {
+          further: (_) {
             emit(PersonDataState.loading());
           },
         );
       },
     );
+  }
+  void genderSelect(String value){
+    gender = value;
+  }
+
+  void birthDateSelect(DateTime value){
+    birthDate = value;
   }
 }
