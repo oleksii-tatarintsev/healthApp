@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:healthapp/domain/bloc/person_data_bloc/person_data_bloc.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
@@ -16,14 +15,7 @@ class PersonDataSection extends StatefulWidget {
 
 class PersonDataSectionState extends State<PersonDataSection> {
   final _formKey = GlobalKey<FormState>();
-  late FToast fToast;
 
-  @override
-  void initState() {
-    super.initState();
-    fToast = FToast();
-    fToast.init(context);
-  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PersonDataBloc, PersonDataState>(
@@ -102,10 +94,9 @@ class PersonDataSectionState extends State<PersonDataSection> {
       listener: (BuildContext context, PersonDataState state) {
         state.maybeWhen(
           orElse: () {},
-          error: (error) => fToast.showToast(
+          error: (error) => ToastMessenger.showContainer(
+            context: context,
             child: ShowToast(errorMessage: error),
-            gravity: ToastGravity.TOP,
-            toastDuration: Duration(seconds: 2),
           ),
         );
       },

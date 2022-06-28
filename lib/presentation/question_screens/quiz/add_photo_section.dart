@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:healthapp/domain/bloc/add_photo_bloc/add_photo_bloc.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
@@ -19,27 +18,15 @@ class AddPhotoSection extends StatefulWidget {
 }
 
 class AddPhotoSectionState extends State<AddPhotoSection> {
-  File? image;
-  final ValueNotifier<File?> imageTemporary = ValueNotifier(null);
-  late FToast fToast;
 
-  Future<dynamic> pickImage(ImageSource source) async {
+  Future<XFile?> pickImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-
-      imageTemporary.value = File(image.path);
-      this.image = imageTemporary.value;
+      return await ImagePicker().pickImage(source: source);
     } on PlatformException catch (e) {
       Text(e.toString());
     }
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    fToast = FToast();
-    fToast.init(context);
+    return null;
   }
 
   @override
@@ -47,6 +34,7 @@ class AddPhotoSectionState extends State<AddPhotoSection> {
     return BlocConsumer<AddPhotoBloc, AddPhotoState>(
       builder: (BuildContext context, state) {
         print(state);
+        final AddPhotoBloc bloc = context.read<AddPhotoBloc>();
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 30),
@@ -83,16 +71,27 @@ class AddPhotoSectionState extends State<AddPhotoSection> {
                                 buttonType: ButtonType.white,
                                 height: 50,
                                 width: 130,
-                                onTap: () =>
-                                  pickImage(ImageSource.camera),
+                                onTap: () async {
+                                  await pickImage(ImageSource.camera)
+                                      .whenComplete(
+                                    () => Navigator.pop(context),
+                                  );
+                                },
                               ),
                               MCButton(
                                 buttonText: 'Из галлереи',
                                 buttonType: ButtonType.blue,
                                 height: 50,
                                 width: 130,
-                                onTap: () =>
-                                  pickImage(ImageSource.gallery),
+                                onTap: () async {
+                                  final XFile? image =
+                                      await pickImage(ImageSource.gallery);
+                                  if (image != null) {
+                                    context
+                                        .read<AddPhotoBloc>()
+                                        .addPhoto(File(image.path));
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -100,26 +99,18 @@ class AddPhotoSectionState extends State<AddPhotoSection> {
                       ),
                     );
                   },
-                  child: ValueListenableBuilder<File?>(
-                    valueListenable: imageTemporary,
-                    builder:
-                        (BuildContext context, File? value, Widget? child) {
-                      context.read<AddPhotoBloc>().addPhoto(value);
-
-                      return Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          if (image != null)
-                            CircleAvatar(
-                              radius: 100,
-                              backgroundImage: FileImage(image!),
-                            )
-                          else
-                            Image.asset(AppImages.addPhoto),
-                          SvgPicture.asset(AppIcons.addPhotoIcon),
-                        ],
-                      );
-                    },
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      if (bloc.image != null)
+                        CircleAvatar(
+                          radius: 100,
+                          backgroundImage: FileImage(bloc.image!),
+                        )
+                      else
+                        Image.asset(AppImages.addPhoto),
+                      SvgPicture.asset(AppIcons.addPhotoIcon),
+                    ],
                   ),
                 ),
               ),
@@ -130,10 +121,9 @@ class AddPhotoSectionState extends State<AddPhotoSection> {
       listener: (BuildContext context, AddPhotoState state) {
         state.maybeWhen(
           orElse: () {},
-          error: (error) => fToast.showToast(
+          error: (error) => ToastMessenger.showContainer(
+            context: context,
             child: ShowToast(errorMessage: error),
-            gravity: ToastGravity.TOP,
-            toastDuration: Duration(seconds: 2),
           ),
         );
       },

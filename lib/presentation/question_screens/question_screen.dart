@@ -16,114 +16,119 @@ class QuestionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<QuizBloc>(
-      create: (BuildContext context) => QuizBloc(),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: BlocBuilder<QuizBloc, QuizState>(
-            builder: (BuildContext context, state) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 55,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: SvgPicture.asset(AppIcons.backIcon),
-                        onPressed: () {
-                          if (state.index == 0) {
-                            Navigator.pop(
-                              context,
-                            );
-                          } else {
-                            context
-                                .read<QuizBloc>()
-                                .add(QuizEvent.move(index: state.index - 1));
-                          }
-                        },
-                      ),
-                      if (state.index == 0)
-                        SizedBox()
-                      else
-                        TextButton(
-                          onPressed: () {
-                            if (state.index >= 5) {
-                              Navigator.pushNamed(
-                                context,
-                                FinalQuestionScreen.routeName,
-                              );
-                            } else {
-                              context.read<QuizBloc>().add(
-                                    QuizEvent.move(index: state.index + 1),
-                                  );
-                            }
-                          },
-                          child: Text(
-                            'Пропустить шаг',
-                            style: MCTextStyles.blue14Bold700,
-                          ),
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: 50),
-                  Text(
-                    '${(state.index + 1).toString()}/6',
-                    style: MCTextStyles.grey12Medium500,
-                  ),
-                  SizedBox(
-                    child: Stack(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<QuizBloc>(
+          create: (BuildContext context) => QuizBloc(),
+        ),
+        BlocProvider<PersonDataBloc>(
+          create: (BuildContext context) => PersonDataBloc(),
+        ),
+        BlocProvider<AddPhotoBloc>(
+          create: (BuildContext context) => AddPhotoBloc(),
+        ),
+      ],
+      child: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: BlocBuilder<QuizBloc, QuizState>(
+              builder: (BuildContext context, state) {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 55,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 4,
-                          width: 255,
-                          decoration: BoxDecoration(
-                            color: MCColors.lightGrey,
+                        IconButton(
+                          icon: SvgPicture.asset(AppIcons.backIcon),
+                          onPressed: () => backButton(context: context, state: state),
+                        ),
+                        if (state.index == 0)
+                          SizedBox()
+                        else
+                          TextButton(
+                            onPressed: () {
+                              if (state.index >= 5) {
+                                Navigator.pushNamed(
+                                  context,
+                                  FinalQuestionScreen.routeName,
+                                );
+                              } else {
+                                context.read<QuizBloc>().add(
+                                      QuizEvent.move(index: state.index + 1),
+                                    );
+                              }
+                            },
+                            child: Text(
+                              'Пропустить шаг',
+                              style: MCTextStyles.blue14Bold700,
+                            ),
                           ),
-                        ),
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
-                          height: 4,
-                          width:
-                              ((MediaQuery.of(context).size.width - 105) / 6) *
-                                  state.index,
-                          color: MCColors.blue,
-                        ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: 60),
-                  state.when(
-                    move: (int index) => _selectQuiz(index),
-                  ),
-                ],
+                    SizedBox(height: 50),
+                    Text(
+                      '${(state.index + 1).toString()}/6',
+                      style: MCTextStyles.grey12Medium500,
+                    ),
+                    SizedBox(
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 4,
+                            width: 255,
+                            decoration: BoxDecoration(
+                              color: MCColors.lightGrey,
+                            ),
+                          ),
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            height: 4,
+                            width:
+                                ((MediaQuery.of(context).size.width - 105) / 6) *
+                                    state.index,
+                            color: MCColors.blue,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 60),
+                    state.when(
+                      move: (int index) => _selectQuiz(index),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          bottomNavigationBar: BlocBuilder<QuizBloc, QuizState>(
+            builder: (BuildContext context, state) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 10,
+                  bottom: 30,
+                ),
+                child: MCButton(
+                  buttonText: 'Далее',
+                  onTap: () async => _submitQuiz(context: context, state: state),
+                  buttonType: ButtonType.blue,
+                ),
               );
             },
           ),
-        ),
-        bottomNavigationBar: BlocBuilder<QuizBloc, QuizState>(
-          builder: (BuildContext context, state) {
-            return Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 10,
-                bottom: 30,
-              ),
-              child: MCButton(
-                buttonText: 'Далее',
-                onTap: () => _submitQuiz(context: context, state: state),
-                buttonType: ButtonType.blue,
-              ),
-            );
-          },
         ),
       ),
     );
   }
 
-  void _submitQuiz({required BuildContext context, required QuizState state}) {
+  Future<void> _submitQuiz({required BuildContext context, required QuizState state}) async {
     switch (state.index) {
       case 0:
         {
@@ -131,33 +136,32 @@ class QuestionScreen extends StatelessWidget {
             personDataSectionKey.currentContext!
                 .read<PersonDataBloc>()
                 .add(PersonDataEvent.changed());
-            if (personDataSectionKey.currentContext!
-                .read<PersonDataBloc>()
-                .state is PersonDataStateValid) {
-              context
-                  .read<QuizBloc>()
-                  .add(QuizEvent.move(index: state.index + 1));
+            if (BlocProvider.of<PersonDataBloc>(personDataSectionKey.currentContext!, listen: false).state is PersonDataStateValid) {
+              await Future.delayed(
+                Duration(milliseconds: 500),
+                () => context.read<QuizBloc>().add(
+                      QuizEvent.move(index: state.index + 1),
+                    ),
+              );
             }
           }
         }
         break;
       case 1:
         {
-            if (addPhotoSectionKey.currentState! is AddPhotoStateInitial) {
-              context.read<AddPhotoBloc>().add(AddPhotoEvent.changed());
-              if (addPhotoSectionKey.currentContext!
-                  .read<AddPhotoBloc>()
-                  .state is AddPhotoStateValid) {
-                context
-                    .read<QuizBloc>()
-                    .add(QuizEvent.move(index: state.index + 1));
-              }
+            context.read<AddPhotoBloc>().add(AddPhotoEvent.changed());
+            if (addPhotoSectionKey.currentContext!.read<AddPhotoBloc>().state
+                is AddPhotoStateValid) {
+              context
+                  .read<QuizBloc>()
+                  .add(QuizEvent.move(index: state.index + 1));
             }
           }
+
         break;
       case 5:
         {
-          Navigator.pushNamed(
+          await Navigator.pushNamed(
             context,
             FinalQuestionScreen.routeName,
           );
@@ -170,20 +174,33 @@ class QuestionScreen extends StatelessWidget {
     }
   }
 
+  void backButton({required BuildContext context, required QuizState state}){
+    switch(state.index){
+      case 0:
+        {
+            Navigator.pop(context);
+        }
+        break;
+      case 1:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
+          context.read<PersonDataBloc>().add(PersonDataEvent.initial());
+        }
+        break;
+      case 2: {
+        context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
+        context.read<AddPhotoBloc>().add(AddPhotoEvent.initial());
+      }
+
+    }
+  }
+
   Widget _selectQuiz(int index) {
     switch (index) {
       case 0:
-        return BlocProvider<PersonDataBloc>(
-          create: (BuildContext context) => PersonDataBloc(),
-          child: PersonDataSection(key: personDataSectionKey),
-        );
+        return PersonDataSection(key: personDataSectionKey);
       case 1:
-        return BlocProvider<AddPhotoBloc>(
-          child: AddPhotoSection(
-            key: addPhotoSectionKey,
-          ),
-          create: (BuildContext context) => AddPhotoBloc(),
-        );
+        return AddPhotoSection(key: addPhotoSectionKey);
       case 2:
         return SelectHeightSection();
       case 3:

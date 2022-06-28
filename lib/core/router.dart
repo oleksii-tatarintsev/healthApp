@@ -55,19 +55,19 @@ class MCRouter {
         }
       case WelcomeScreen.routeName:
         {
-          return splashBuilder(WelcomeScreen(), settings);
+          return builder(WelcomeScreen(), settings);
         }
       case TellAboutYourself.routeName:
         {
-          return splashBuilder(TellAboutYourself(), settings);
+          return builder(TellAboutYourself(), settings);
         }
       case QuestionScreen.routeName:
         {
-          return splashBuilder(QuestionScreen(), settings);
+          return builder(QuestionScreen(), settings);
         }
       case FinalQuestionScreen.routeName:
         {
-          return splashBuilder(FinalQuestionScreen(), settings);
+          return builder(FinalQuestionScreen(), settings);
         }
       default:
         return builder(Container(), settings);

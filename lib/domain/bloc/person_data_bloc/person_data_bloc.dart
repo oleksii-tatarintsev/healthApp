@@ -24,7 +24,9 @@ class PersonDataBloc extends Bloc<PersonDataEvent, PersonDataState> {
           },
           further: (_) {
             emit(PersonDataState.loading());
-          },
+          }, initial: (_) {
+            emit(PersonDataState.initial());
+        },
         );
       },
     );

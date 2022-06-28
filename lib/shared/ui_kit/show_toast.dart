@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:healthapp/shared/style/export.dart';
 
 
@@ -20,5 +21,17 @@ class ShowToast extends StatelessWidget {
       ),
     );
   }
+}
 
+class ToastMessenger{
+  static void showContainer({required BuildContext context, required Widget child}){
+     final FToast fToast = FToast();
+     fToast.init(context);
+
+     return fToast.showToast(
+       child: child,
+       gravity: ToastGravity.TOP,
+       toastDuration: Duration(seconds: 2),
+     );
+  }
 }
