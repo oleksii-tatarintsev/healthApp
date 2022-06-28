@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:healthapp/domain/bloc/person_data_bloc/person_data_bloc.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
+import 'package:healthapp/shared/ui_kit/show_toast.dart';
 import 'package:healthapp/utils/validator.dart';
 
 class PersonDataSection extends StatefulWidget {
@@ -23,33 +24,10 @@ class PersonDataSectionState extends State<PersonDataSection> {
     fToast = FToast();
     fToast.init(context);
   }
-
-  Widget _showToast(String error) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
-        color: Colors.greenAccent,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.check),
-          SizedBox(
-            width: 12.0,
-          ),
-          Text(error),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PersonDataBloc, PersonDataState>(
       builder: (BuildContext context, state) {
-        print(state);
-
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Form(
@@ -125,8 +103,8 @@ class PersonDataSectionState extends State<PersonDataSection> {
         state.maybeWhen(
           orElse: () {},
           error: (error) => fToast.showToast(
-            child: _showToast(error),
-            gravity: ToastGravity.BOTTOM,
+            child: ShowToast(errorMessage: error),
+            gravity: ToastGravity.TOP,
             toastDuration: Duration(seconds: 2),
           ),
         );

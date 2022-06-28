@@ -49,6 +49,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     return CupertinoButton(
       onPressed: () => _showDialog(
         CupertinoDatePicker(
+          maximumYear: DateTime.now().year,
           initialDateTime: DateTime.now(),
           mode: CupertinoDatePickerMode.date,
           use24hFormat: true,

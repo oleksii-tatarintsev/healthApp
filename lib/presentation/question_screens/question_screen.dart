@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:healthapp/domain/bloc/add_photo_bloc/add_photo_bloc.dart';
 import 'package:healthapp/domain/bloc/person_data_bloc/person_data_bloc.dart';
 import 'package:healthapp/domain/bloc/quiz_bloc/quiz_bloc.dart';
 import 'package:healthapp/presentation/export.dart';
@@ -11,6 +12,7 @@ class QuestionScreen extends StatelessWidget {
   static const routeName = '/question_screen';
   QuestionScreen({Key? key}) : super(key: key);
   final GlobalKey<PersonDataSectionState> personDataSectionKey = GlobalKey();
+  final GlobalKey<AddPhotoSectionState> addPhotoSectionKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +141,20 @@ class QuestionScreen extends StatelessWidget {
           }
         }
         break;
+      case 1:
+        {
+            if (addPhotoSectionKey.currentState! is AddPhotoStateInitial) {
+              context.read<AddPhotoBloc>().add(AddPhotoEvent.changed());
+              if (addPhotoSectionKey.currentContext!
+                  .read<AddPhotoBloc>()
+                  .state is AddPhotoStateValid) {
+                context
+                    .read<QuizBloc>()
+                    .add(QuizEvent.move(index: state.index + 1));
+              }
+            }
+          }
+        break;
       case 5:
         {
           Navigator.pushNamed(
@@ -162,7 +178,12 @@ class QuestionScreen extends StatelessWidget {
           child: PersonDataSection(key: personDataSectionKey),
         );
       case 1:
-        return AddPhotoSection();
+        return BlocProvider<AddPhotoBloc>(
+          child: AddPhotoSection(
+            key: addPhotoSectionKey,
+          ),
+          create: (BuildContext context) => AddPhotoBloc(),
+        );
       case 2:
         return SelectHeightSection();
       case 3:
