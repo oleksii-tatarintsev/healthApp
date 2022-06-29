@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
-class SelectWeightSection extends StatelessWidget {
+class SelectWeightSection extends StatefulWidget {
   const SelectWeightSection({Key? key}) : super(key: key);
 
+  @override
+  State<SelectWeightSection> createState() => SelectWeightSectionState();
+}
+
+class SelectWeightSectionState extends State<SelectWeightSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,8 +45,7 @@ class SelectWeightSection extends StatelessWidget {
                   WeightPicker(
                     text: 'кг',
                     isVertical: false,
-                    onChanged: (int value){
-                    },
+                    onChanged: (int value) {},
                   ),
                   RotatedBox(
                     quarterTurns: 3,
@@ -62,4 +66,3 @@ class SelectWeightSection extends StatelessWidget {
     );
   }
 }
-

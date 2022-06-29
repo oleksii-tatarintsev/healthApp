@@ -15,61 +15,61 @@ class FinalQuestionScreen extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(1),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: SvgPicture.asset(AppIcons.backIcon),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: SvgPicture.asset(AppIcons.backIcon),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                Spacer(
-                  flex: 1,
+              ),
+              Spacer(
+                flex: 1,
+              ),
+              Center(
+                child: Image.asset(
+                  AppImages.finalQuiz,
+                  width: MediaQuery.of(context).size.shortestSide * 0.7,
                 ),
-                Center(
-                  child: Image.asset(
-                    AppImages.finalQuiz,
-                    width: MediaQuery.of(context).size.shortestSide * 0.7,
-                  ),
-                ),
-                Spacer(
-                  flex: 2,
-                ),
-                Text(
-                  'Поздравляем,\n вы заполнили профиль!',
-                  style: MCTextStyles.black20SemiBold600,
+              ),
+              Spacer(
+                flex: 2,
+              ),
+              Text(
+                'Поздравляем,\n вы заполнили профиль!',
+                style: MCTextStyles.black20SemiBold600,
+                textAlign: TextAlign.center,
+              ),
+              Spacer(
+                flex: 1,
+              ),
+              SizedBox(
+                width: 315,
+                child: Text(
+                  'Начните отслеживать состояние вашего здоровья: добавляйте, сохраняйте и систематизируйте медицинские данные',
                   textAlign: TextAlign.center,
+                  style: MCTextStyles.black14Medium500,
                 ),
-                Spacer(
-                  flex: 1,
+              ),
+              Spacer(
+                flex: 3,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: MCButton(
+                  buttonText: 'Начать',
+                  onTap: () {},
+                  buttonType: ButtonType.blue,
                 ),
-                SizedBox(
-                  width: 315,
-                  child: Text(
-                    'Начните отслеживать состояние вашего здоровья: добавляйте, сохраняйте и систематизируйте медицинские данные',
-                    textAlign: TextAlign.center,
-                    style: MCTextStyles.black14Medium500,
-                  ),
-                ),
-                Spacer(
-                  flex: 3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: MCButton(
-                    buttonText: 'Начать',
-                    onTap: () {},
-                    buttonType: ButtonType.blue,
-                  ),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-              ],
-            ),
+              ),
+              Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
         ),
       ),
     );

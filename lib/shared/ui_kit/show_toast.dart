@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:healthapp/shared/style/export.dart';
 
-
 class ShowToast extends StatelessWidget {
   final String errorMessage;
-  const ShowToast({required this.errorMessage, Key? key, }) : super(key: key);
+  const ShowToast({
+    required this.errorMessage,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +25,18 @@ class ShowToast extends StatelessWidget {
   }
 }
 
-class ToastMessenger{
-  static void showContainer({required BuildContext context, required Widget child}){
-     final FToast fToast = FToast();
-     fToast.init(context);
+class ToastMessenger {
+  static void showContainer({
+    required BuildContext context,
+    required Widget child,
+  }) {
+    final FToast fToast = FToast();
+    fToast.init(context);
 
-     return fToast.showToast(
-       child: child,
-       gravity: ToastGravity.TOP,
-       toastDuration: Duration(seconds: 2),
-     );
+    return fToast.showToast(
+      child: child,
+      gravity: ToastGravity.TOP,
+      toastDuration: Duration(seconds: 2),
+    );
   }
 }

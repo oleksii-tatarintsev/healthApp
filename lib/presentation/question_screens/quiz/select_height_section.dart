@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
-class SelectHeightSection extends StatelessWidget {
+class SelectHeightSection extends StatefulWidget {
   const SelectHeightSection({Key? key}) : super(key: key);
 
+  @override
+  State<SelectHeightSection> createState() => SelectHeightSectionState();
+}
+
+class SelectHeightSectionState extends State<SelectHeightSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +54,7 @@ class SelectHeightSection extends StatelessWidget {
                   HeightPicker(
                     text: 'см',
                     isVertical: true,
-                    onChanged: (_){},
+                    onChanged: (_) {},
                   ),
                 ],
               ),

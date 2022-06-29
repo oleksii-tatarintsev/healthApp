@@ -7,7 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:healthapp/domain/bloc/add_photo_bloc/add_photo_bloc.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
-import 'package:healthapp/shared/ui_kit/show_toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddPhotoSection extends StatefulWidget {
@@ -18,7 +17,6 @@ class AddPhotoSection extends StatefulWidget {
 }
 
 class AddPhotoSectionState extends State<AddPhotoSection> {
-
   Future<XFile?> pickImage(ImageSource source) async {
     try {
       return await ImagePicker().pickImage(source: source);
@@ -33,7 +31,6 @@ class AddPhotoSectionState extends State<AddPhotoSection> {
   Widget build(BuildContext context) {
     return BlocConsumer<AddPhotoBloc, AddPhotoState>(
       builder: (BuildContext context, state) {
-        print(state);
         final AddPhotoBloc bloc = context.read<AddPhotoBloc>();
 
         return Container(

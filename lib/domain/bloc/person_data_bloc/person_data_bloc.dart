@@ -14,28 +14,37 @@ class PersonDataBloc extends Bloc<PersonDataEvent, PersonDataState> {
       (event, emit) {
         event.map(
           changed: (_) {
-            if(gender == ''){
-              emit(PersonDataState.error(errorMessage: 'Выберете пол'));
-            } else if(birthDate == null){
-              emit(PersonDataState.error(errorMessage: 'Выберете дату рождения'));
-            } else{
+            if (birthDate == null) {
+              emit(
+                PersonDataState.error(
+                  errorMessage: 'Выберете дату рождения',
+                ),
+              );
+            } else if (gender == '') {
+              emit(
+                PersonDataState.error(
+                  errorMessage: 'Выберете пол',
+                ),
+              );
+            } else {
               emit(PersonDataState.valid());
             }
           },
           further: (_) {
             emit(PersonDataState.loading());
-          }, initial: (_) {
+          },
+          initial: (_) {
             emit(PersonDataState.initial());
-        },
+          },
         );
       },
     );
   }
-  void genderSelect(String value){
+  void genderSelect(String value) {
     gender = value;
   }
 
-  void birthDateSelect(DateTime value){
+  void birthDateSelect(DateTime value) {
     birthDate = value;
   }
 }

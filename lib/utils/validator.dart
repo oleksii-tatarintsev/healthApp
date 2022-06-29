@@ -12,6 +12,7 @@ class Validator {
 
     return null;
   }
+
   static String? validateLastName({required String name}) {
     if (name.isEmpty) {
       return 'Введите фамилию';

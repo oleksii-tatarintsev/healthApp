@@ -3,7 +3,6 @@ import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
 class HeightPicker extends StatefulWidget {
-
   final String text;
   final bool isVertical;
   final ValueChanged<int>? onChanged;

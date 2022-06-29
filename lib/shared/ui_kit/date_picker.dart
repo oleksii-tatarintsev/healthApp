@@ -45,7 +45,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-
     return CupertinoButton(
       onPressed: () => _showDialog(
         CupertinoDatePicker(
@@ -60,8 +59,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         ),
       ),
       child: Text(
-        dateTime == null ? '___' :
-        date.format(dateTime!),
+        dateTime == null ? '___' : date.format(dateTime!),
         style: MCTextStyles.blue14Bold700,
       ),
     );

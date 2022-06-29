@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:healthapp/domain/bloc/add_photo_bloc/add_photo_bloc.dart';
+import 'package:healthapp/domain/bloc/blood_type_bloc/blood_type_bloc.dart';
 import 'package:healthapp/domain/bloc/person_data_bloc/person_data_bloc.dart';
 import 'package:healthapp/domain/bloc/quiz_bloc/quiz_bloc.dart';
 import 'package:healthapp/presentation/export.dart';
@@ -13,6 +14,12 @@ class QuestionScreen extends StatelessWidget {
   QuestionScreen({Key? key}) : super(key: key);
   final GlobalKey<PersonDataSectionState> personDataSectionKey = GlobalKey();
   final GlobalKey<AddPhotoSectionState> addPhotoSectionKey = GlobalKey();
+  final GlobalKey<SelectHeightSectionState> heightSectionKey = GlobalKey();
+  final GlobalKey<SelectWeightSectionState> weightSectionKey = GlobalKey();
+  final GlobalKey<SelectBloodTypeSectionState> bloodTypeSectionKey =
+      GlobalKey();
+  final GlobalKey<ArterialPressureSectionState> pressureSectionKey =
+      GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +34,12 @@ class QuestionScreen extends StatelessWidget {
         BlocProvider<AddPhotoBloc>(
           create: (BuildContext context) => AddPhotoBloc(),
         ),
+        BlocProvider<BloodTypeBloc>(
+          create: (BuildContext context) => BloodTypeBloc(),
+        ),
       ],
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
@@ -46,29 +56,30 @@ class QuestionScreen extends StatelessWidget {
                       children: [
                         IconButton(
                           icon: SvgPicture.asset(AppIcons.backIcon),
-                          onPressed: () => backButton(context: context, state: state),
+                          onPressed: () =>
+                              backButton(context: context, state: state),
                         ),
-                        if (state.index == 0)
-                          SizedBox()
-                        else
-                          TextButton(
-                            onPressed: () {
-                              if (state.index >= 5) {
-                                Navigator.pushNamed(
-                                  context,
-                                  FinalQuestionScreen.routeName,
-                                );
-                              } else {
-                                context.read<QuizBloc>().add(
-                                      QuizEvent.move(index: state.index + 1),
-                                    );
-                              }
-                            },
-                            child: Text(
-                              'Пропустить шаг',
-                              style: MCTextStyles.blue14Bold700,
-                            ),
+                        // if (state.index == 0)
+                        //   SizedBox()
+                        // else
+                        TextButton(
+                          onPressed: () {
+                            if (state.index >= 5) {
+                              Navigator.pushNamed(
+                                context,
+                                FinalQuestionScreen.routeName,
+                              );
+                            } else {
+                              context.read<QuizBloc>().add(
+                                    QuizEvent.move(index: state.index + 1),
+                                  );
+                            }
+                          },
+                          child: Text(
+                            'Пропустить шаг',
+                            style: MCTextStyles.blue14Bold700,
                           ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 50),
@@ -89,9 +100,9 @@ class QuestionScreen extends StatelessWidget {
                           AnimatedContainer(
                             duration: Duration(milliseconds: 500),
                             height: 4,
-                            width:
-                                ((MediaQuery.of(context).size.width - 105) / 6) *
-                                    state.index,
+                            width: ((MediaQuery.of(context).size.width - 105) /
+                                    6) *
+                                state.index,
                             color: MCColors.blue,
                           ),
                         ],
@@ -117,7 +128,8 @@ class QuestionScreen extends StatelessWidget {
                 ),
                 child: MCButton(
                   buttonText: 'Далее',
-                  onTap: () async => _submitQuiz(context: context, state: state),
+                  onTap: () async =>
+                      _submitQuiz(context: context, state: state),
                   buttonType: ButtonType.blue,
                 ),
               );
@@ -128,7 +140,10 @@ class QuestionScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _submitQuiz({required BuildContext context, required QuizState state}) async {
+  Future<void> _submitQuiz({
+    required BuildContext context,
+    required QuizState state,
+  }) async {
     switch (state.index) {
       case 0:
         {
@@ -136,7 +151,10 @@ class QuestionScreen extends StatelessWidget {
             personDataSectionKey.currentContext!
                 .read<PersonDataBloc>()
                 .add(PersonDataEvent.changed());
-            if (BlocProvider.of<PersonDataBloc>(personDataSectionKey.currentContext!, listen: false).state is PersonDataStateValid) {
+            if (BlocProvider.of<PersonDataBloc>(
+              personDataSectionKey.currentContext!,
+              listen: false,
+            ).state is PersonDataStateValid) {
               await Future.delayed(
                 Duration(milliseconds: 500),
                 () => context.read<QuizBloc>().add(
@@ -149,15 +167,35 @@ class QuestionScreen extends StatelessWidget {
         break;
       case 1:
         {
-            context.read<AddPhotoBloc>().add(AddPhotoEvent.changed());
-            if (addPhotoSectionKey.currentContext!.read<AddPhotoBloc>().state
-                is AddPhotoStateValid) {
-              context
-                  .read<QuizBloc>()
-                  .add(QuizEvent.move(index: state.index + 1));
-            }
+          context.read<AddPhotoBloc>().add(AddPhotoEvent.changed());
+          if (addPhotoSectionKey.currentContext!.read<AddPhotoBloc>().state
+              is AddPhotoStateValid) {
+            context
+                .read<QuizBloc>()
+                .add(QuizEvent.move(index: state.index + 1));
           }
-
+        }
+        break;
+      case 2:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index + 1));
+        }
+        break;
+      case 3:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index + 1));
+        }
+        break;
+      case 4:
+        {
+          context.read<BloodTypeBloc>().add(BloodTypeEvent.changed());
+          if (bloodTypeSectionKey.currentContext!.read<BloodTypeBloc>().state
+              is BloodTypeStateValid) {
+            context
+                .read<QuizBloc>()
+                .add(QuizEvent.move(index: state.index + 1));
+          }
+        }
         break;
       case 5:
         {
@@ -174,11 +212,11 @@ class QuestionScreen extends StatelessWidget {
     }
   }
 
-  void backButton({required BuildContext context, required QuizState state}){
-    switch(state.index){
+  void backButton({required BuildContext context, required QuizState state}) {
+    switch (state.index) {
       case 0:
         {
-            Navigator.pop(context);
+          Navigator.pop(context);
         }
         break;
       case 1:
@@ -187,11 +225,28 @@ class QuestionScreen extends StatelessWidget {
           context.read<PersonDataBloc>().add(PersonDataEvent.initial());
         }
         break;
-      case 2: {
-        context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
-        context.read<AddPhotoBloc>().add(AddPhotoEvent.initial());
-      }
-
+      case 2:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
+          context.read<AddPhotoBloc>().add(AddPhotoEvent.initial());
+        }
+        break;
+      case 3:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
+        }
+        break;
+      case 4:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
+        }
+        break;
+      case 5:
+        {
+          context.read<QuizBloc>().add(QuizEvent.move(index: state.index - 1));
+          context.read<BloodTypeBloc>().add(BloodTypeEvent.initial());
+        }
+        break;
     }
   }
 
@@ -202,13 +257,13 @@ class QuestionScreen extends StatelessWidget {
       case 1:
         return AddPhotoSection(key: addPhotoSectionKey);
       case 2:
-        return SelectHeightSection();
+        return SelectHeightSection(key: heightSectionKey);
       case 3:
-        return SelectWeightSection();
+        return SelectWeightSection(key: weightSectionKey);
       case 4:
-        return SelectBloodTypeSection();
+        return SelectBloodTypeSection(key: bloodTypeSectionKey);
       case 5:
-        return ArterialPressureSection();
+        return ArterialPressureSection(key: pressureSectionKey);
       default:
         return ArterialPressureSection();
     }

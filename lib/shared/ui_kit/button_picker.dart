@@ -8,7 +8,7 @@ class CustomRadioDemo extends StatefulWidget {
   const CustomRadioDemo({
     required this.title1,
     required this.title2,
-     this.onChanged,
+    this.onChanged,
     Key? key,
   }) : super(key: key);
 
@@ -19,7 +19,6 @@ class CustomRadioDemo extends StatefulWidget {
 class _CustomRadioDemoState extends State<CustomRadioDemo> {
   String? _groupValue;
 
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,10 +27,10 @@ class _CustomRadioDemoState extends State<CustomRadioDemo> {
         MyRadioOption<String>(
           value: '1',
           groupValue: _groupValue,
-          onChanged: (String? value){
-            if(value != null){
+          onChanged: (String? value) {
+            if (value != null) {
               setState(() => _groupValue = value);
-              widget.onChanged?.call(_groupValue!);
+              widget.onChanged?.call(widget.title1);
             }
           },
           text: widget.title1,
@@ -39,10 +38,10 @@ class _CustomRadioDemoState extends State<CustomRadioDemo> {
         MyRadioOption<String>(
           value: '2',
           groupValue: _groupValue,
-          onChanged: (String? value){
-            if(value != null){
+          onChanged: (String? value) {
+            if (value != null) {
               setState(() => _groupValue = value);
-              widget.onChanged?.call(_groupValue!);
+              widget.onChanged?.call(widget.title2);
             }
           },
           text: widget.title2,

@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/shared/style/export.dart';
 import 'package:healthapp/shared/ui_kit/export.dart';
 
-class ArterialPressureSection extends StatelessWidget {
+class ArterialPressureSection extends StatefulWidget {
   const ArterialPressureSection({Key? key}) : super(key: key);
 
+  @override
+  State<ArterialPressureSection> createState() =>
+      ArterialPressureSectionState();
+}
+
+class ArterialPressureSectionState extends State<ArterialPressureSection> {
   @override
   Widget build(BuildContext context) {
     return Container(

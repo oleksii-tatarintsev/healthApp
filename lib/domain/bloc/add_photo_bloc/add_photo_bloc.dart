@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
 part 'add_photo_bloc.freezed.dart';
 part 'add_photo_event.dart';
 part 'add_photo_state.dart';
@@ -15,7 +14,6 @@ class AddPhotoBloc extends Bloc<AddPhotoEvent, AddPhotoState> {
     on<AddPhotoEvent>(
       (event, emit) {
         event.map(
-
           changed: (_) {
             if (image == null) {
               emit(AddPhotoState.error(errorMessage: 'Установите фотографию'));
@@ -25,9 +23,10 @@ class AddPhotoBloc extends Bloc<AddPhotoEvent, AddPhotoState> {
           },
           further: (_) {
             emit(AddPhotoState.loading());
-          }, initial: (_) {
+          },
+          initial: (_) {
             emit(AddPhotoState.initial());
-        },
+          },
         );
       },
     );
@@ -36,6 +35,5 @@ class AddPhotoBloc extends Bloc<AddPhotoEvent, AddPhotoState> {
     add(AddPhotoEvent.further());
     image = value;
     add(AddPhotoEvent.changed());
-
   }
 }
