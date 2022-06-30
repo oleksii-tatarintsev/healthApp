@@ -199,10 +199,12 @@ class QuestionScreen extends StatelessWidget {
         break;
       case 5:
         {
-          await Navigator.pushNamed(
-            context,
-            FinalQuestionScreen.routeName,
-          );
+          if (pressureSectionKey.currentState!.submitForm()) {
+            await Navigator.pushNamed(
+              context,
+              FinalQuestionScreen.routeName,
+            );
+          }
           break;
         }
       default:

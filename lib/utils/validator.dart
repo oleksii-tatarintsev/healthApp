@@ -26,4 +26,26 @@ class Validator {
 
     return null;
   }
+  static String? validateUpperPressure({required String pressure}) {
+    
+    if(pressure.isEmpty){
+      return '';
+    }
+    if(int.parse(pressure) < 40 && int.parse(pressure) > 200){
+      return 'Введите действительное значение';
+    }
+
+    return null;
+  }
+
+  static String? validateLowerPressure({required String pressure}) {
+    if(pressure.isEmpty){
+      return '';
+    }
+    if(int.parse(pressure) < 30 && int.parse(pressure) > 150){
+      return 'Введите действительное значение';
+    }
+
+    return null;
+  }
 }
