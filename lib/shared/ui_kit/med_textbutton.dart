@@ -7,7 +7,7 @@ class MCTextButton extends StatelessWidget {
   final bool underline;
   // TODO: Домашка
   /// Замени виджет на путь к инонке
-  final Widget? icon;
+  final String? icon;
 
   const MCTextButton({
     required this.buttonText,
@@ -31,7 +31,7 @@ class MCTextButton extends StatelessWidget {
               if (icon != null)
                 Row(
                   children: [
-                    icon!,
+                    Image.asset(icon!),
                     const SizedBox(width: 10),
                   ],
                 )

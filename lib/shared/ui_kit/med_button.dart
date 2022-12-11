@@ -1,81 +1,84 @@
 import 'package:flutter/cupertino.dart';
 import 'package:healthapp/shared/style/export.dart';
 
-//TODO: Домашка
-/// Как ты видишь тут есть энам для того чтоб разные цвета кнопки далеть и
-/// разные разный цвет текста. Твоя задача, сделать екстеншин и переделать
-/// этот виджет из StatefulWidget в StatelessWidget
-enum ButtonType { blue, white }
-
-class MCButton extends StatefulWidget {
-  final ButtonType? buttonType;
+class MCButton extends StatelessWidget {
+  final ButtonType buttonType;
   final String buttonText;
   final VoidCallback? onTap;
+  final double? height;
+  final double? width;
 
   const MCButton({
     required this.buttonText,
-    this.buttonType,
+    required this.buttonType,
     this.onTap,
     Key? key,
+    this.height = 50,
+    this.width = double.infinity,
   }) : super(key: key);
-
-  @override
-  State<MCButton> createState() => _MCButtonState();
-}
-
-class _MCButtonState extends State<MCButton> {
-  late final Color buttonColor;
-  late final Color textColor;
-
-  @override
-  void initState() {
-    switch (widget.buttonType) {
-      case ButtonType.blue:
-        {
-          buttonColor = MCColors.blue;
-          textColor = MCColors.white;
-          break;
-        }
-      case ButtonType.white:
-        {
-          buttonColor = MCColors.white;
-          textColor = MCColors.blue;
-          break;
-        }
-      default:
-        {
-          buttonColor = MCColors.blue;
-          textColor = MCColors.white;
-          break;
-        }
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: widget.onTap,
+      onPressed: onTap,
       disabledColor: MCColors.lightGrey,
-      color: buttonColor,
+      color: buttonType.getButtonColor,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: widget.onTap == null ? MCColors.lightGrey : MCColors.blue,
+            color: onTap == null ? MCColors.lightGrey : MCColors.blue,
           ),
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        height: 50.0,
+        height: height,
         alignment: Alignment.center,
-        width: double.infinity,
+        width: width,
         child: Text(
-          widget.buttonText,
+          buttonText,
           style: MCTextStyles.black16SemiBold600.copyWith(
-            color: widget.onTap == null ? MCColors.grey : textColor,
+            color: onTap == null ? MCColors.grey : buttonType.getTextColor,
           ),
         ),
       ),
     );
+  }
+}
+
+enum ButtonType { blue, white }
+
+extension GetButtonStyle on ButtonType {
+  Color get getButtonColor {
+    switch (this) {
+      case ButtonType.blue:
+        {
+          return MCColors.blue;
+        }
+      case ButtonType.white:
+        {
+          return MCColors.white;
+        }
+      default:
+        {
+          return MCColors.blue;
+        }
+    }
+  }
+
+  Color get getTextColor {
+    switch (this) {
+      case ButtonType.blue:
+        {
+          return MCColors.white;
+        }
+      case ButtonType.white:
+        {
+          return MCColors.blue;
+        }
+      default:
+        {
+          return MCColors.white;
+        }
+    }
   }
 }

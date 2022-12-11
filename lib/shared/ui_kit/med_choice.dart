@@ -23,19 +23,7 @@ class MCChoice extends StatefulWidget {
 }
 
 class _MCChoice extends State<MCChoice> {
-  int _selected = 0;
-
-  @override
-  void initState() {
-    if (widget.selectedOption != null) {
-      for (int index = 0; index < widget.options.length; index++) {
-        if (widget.options[index] == widget.selectedOption) {
-          _selected = index;
-        }
-      }
-    }
-    super.initState();
-  }
+  int? _selected;
 
   @override
   Widget build(BuildContext context) {

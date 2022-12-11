@@ -5,7 +5,7 @@ class MCDialogs {
   static Future<void> showMCDialog({
     required BuildContext context,
     required Widget child,
-    bool dismissible = false,
+    bool dismissible = true,
     double height = 200,
     double? width,
   }) async {
